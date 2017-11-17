@@ -1,0 +1,77 @@
+* {
+  box-sizing: border-box;
+}
+
+// @media screen and (min-width: 375px) {
+//   html {
+//     font-size: 50px;
+//   }
+// }
+//
+// @media screen and (min-width: 768px) {
+//   html {
+//     font-size: 100px;
+//   }
+// }
+//
+// @media screen and (min-width: 1024px) {
+//   html {
+//     font-size: 150px;
+//   }
+// }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.Home {
+  padding: 10px;
+
+  * {
+    font-size: 14px;
+  }
+
+  header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+
+    .left {
+      > span {
+        font-size: 30px;
+        font-weight: bold;
+      }
+
+      > button {
+        margin-left: 5px;
+      }
+    }
+
+    .right {
+      padding-top: 10px;
+    }
+  }
+
+  .treeSelect {
+    width: 100%;
+
+    .ant-select-selection {
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      box-shadow: none;
+      border-radius: 0;
+    }
+  }
+}
+
+.ant-select-dropdown {
+  * {
+    font-size: 12px;
+  }
+
+  // top: 46px !important;
+}

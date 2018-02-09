@@ -1,11 +1,16 @@
 // home page
 import React, { Component } from 'react'
-import { TreeSelect, Button, Radio, Icon } from 'antd'
+import { TreeSelect, Button, Radio, Icon, Tag } from 'antd'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
+import moment from 'moment'
+import YearSwitchPanel from './YearSwitchPanel'
+import AnalystOverallTable from './AnalystOverallTable'
 
 const SHOW_PARENT = TreeSelect.SHOW_PARENT
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
+const CheckableTag = Tag.CheckableTag
+const quarterTags = ['Q1', 'Q2', 'Q3', 'Q4']
 
 class Home extends Component {
   constructor(props) {
@@ -90,10 +95,18 @@ class Home extends Component {
       }],
     }]
 
+    const curYear = moment().year()
+    const curQuarter = moment().quarter() - 1
+
     this.state = {
       treeData,
       selected: ['0-1'],
       mainTitle: 0,
+      roleTab: 0,
+      dataTab: 0,
+      year0: curYear,
+      year1: curYear,
+      selectedQuarterTags: [quarterTags[curQuarter]],
     }
   }
 
@@ -105,11 +118,47 @@ class Home extends Component {
   onSwitch = () => {
     this.setState({
       mainTitle: this.state.mainTitle ^ 1,
+      roleTab: this.state.roleTab ^ 1,
     })
   }
 
   onModelChange = (e) => {
     console.log(`radio checked:${e.target.value}`)
+    this.setState({
+      dataTab: e.target.value,
+    })
+  }
+
+  onChangeYear0 = (year0) => {
+    this.setState({
+      year0,
+    })
+  }
+
+  onQuarterTagsChange = (tag, checked) => {
+    const { selectedQuarterTags } = this.state
+    // let nextSelectedQuarterTags = []
+    // if (checked) {
+    //   if (tag === 'ALL') {
+    //     nextSelectedQuarterTags = [...quarterTags]
+    //   } else {
+    //     nextSelectedQuarterTags = [...selectedQuarterTags, tag]
+    //     if (nextSelectedQuarterTags.length === quarterTags.length - 1) {
+    //       nextSelectedQuarterTags = [...quarterTags]
+    //     }
+    //   }
+    // } else if (tag === 'ALL') {
+    //   nextSelectedQuarterTags = []
+    // } else {
+    //   nextSelectedQuarterTags = selectedQuarterTags.filter((t) => t !== tag)
+    //   if (nextSelectedQuarterTags.length === quarterTags.length - 1) {
+    //     nextSelectedQuarterTags = nextSelectedQuarterTags.filter((t) => t !== 'ALL')
+    //   }
+    // }
+
+    const nextSelectedQuarterTags = checked ? [tag] : selectedQuarterTags
+
+    this.setState({ selectedQuarterTags: nextSelectedQuarterTags })
   }
 
   render() {
@@ -153,7 +202,40 @@ class Home extends Component {
             </RadioGroup>
           </div>
         </header>
-        <TreeSelect className="treeSelect" {...tProps} />
+        <div
+          style={{
+            display: this.state.roleTab === 0 ? 'block' : 'none',
+          }}
+        >
+          <div className="date-picker">
+            <YearSwitchPanel
+              onChange={this.onChangeYear0}
+              defaultYear={this.state.year0}
+            />
+            <div className="tag-bar">
+              {
+                quarterTags.map((tag) => (
+                  <CheckableTag
+                    key={tag}
+                    checked={this.state.selectedQuarterTags.indexOf(tag) > -1}
+                    onChange={(checked) => this.onQuarterTagsChange(tag, checked)}
+                  >
+                    {tag}
+                  </CheckableTag>
+                ))
+              }
+            </div>
+          </div>
+          <TreeSelect className="treeSelect" {...tProps} />
+          <AnalystOverallTable />
+        </div>
+        <div
+          style={{
+            display: this.state.roleTab === 1 ? 'block' : 'none',
+          }}
+        >
+          hello analyst
+        </div>
       </div>
     )
   }

@@ -56,22 +56,76 @@ body {
   }
 
   .treeSelect {
+    margin-top: 10px;
     width: 100%;
+  }
 
-    .ant-select-selection {
-      border-top: none;
-      border-left: none;
-      border-right: none;
-      box-shadow: none;
-      border-radius: 0;
+  .date-picker {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+
+    .year-switch-panel {
+      flex: 1 0 30%;
+      padding: 0 5px;
+
+      span {
+        font-size: 16px;
+        line-height: 1.8;
+      }
+
+      i {
+        font-size: 12px;
+        line-height: 2.5;
+      }
     }
+
+    .tag-bar {
+      padding: 3px 0;
+      padding-left: 10px;
+      flex: 1 0 70%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+
+      .ant-tag {
+        flex: 1 1 auto;
+        text-align: center;
+      }
+    }
+  }
+
+  .analyst-overall-table {
+    margin-top: 10px;
   }
 }
 
-.ant-select-dropdown {
-  * {
-    font-size: 12px;
+.year-switch-panel {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  padding: 10px;
+
+  > * {
+    display: block;
   }
 
-  // top: 46px !important;
+  i {
+    font-size: 14px;
+    line-height: 2;
+
+    &:hover {
+      color: #1591E1;
+      cursor: pointer;
+    }
+  }
+
+  span {
+    font-size: 18px;
+    font-weight: 500;
+  }
 }
